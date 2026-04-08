@@ -1,0 +1,236 @@
+[1mdiff --git a/main.go b/main.go[m
+[1mindex 44d343c..d66f232 100644[m
+[1m--- a/main.go[m
+[1m+++ b/main.go[m
+[36m@@ -2,6 +2,7 @@[m [mpackage main[m
+ [m
+ import ([m
+ 	"fmt"[m
+[32m+[m	[32m"html/template"[m
+ 	"log"[m
+ 	"net/http"[m
+ 	"os"[m
+[36m@@ -48,7 +49,18 @@[m [mfunc handleIndex(w http.ResponseWriter, r *http.Request) {[m
+ }[m
+ [m
+ func handleMenu(w http.ResponseWriter, r *http.Request) {[m
+[31m-	serveHTML(w, "menu.html")[m
+[32m+[m	[32mpizzas := []Pizza{[m
+[32m+[m		[32m{Name: "Margherita", Price: 8.50},[m
+[32m+[m		[32m{Name: "Salami", Price: 10.00},[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mtmpl, err := template.ParseFiles("templates/menu.html")[m
+[32m+[m	[32mif err != nil {[m
+[32m+[m		[32mhttp.Error(w, err.Error(), http.StatusInternalServerError)[m
+[32m+[m		[32mreturn[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mtmpl.Execute(w, pizzas)[m
+ }[m
+ [m
+ func handleAbout(w http.ResponseWriter, r *http.Request) {[m
+[36m@@ -67,3 +79,10 @@[m [mfunc handleOrder(w http.ResponseWriter, r *http.Request) {[m
+ 	w.Header().Set("Content-Type", "application/json")[m
+ 	fmt.Fprint(w, `{"status": "Bestellung angenommen"}`)[m
+ }[m
+[32m+[m
+[32m+[m[32mtype Pizza struct {[m
+[32m+[m	[32mName        string[m
+[32m+[m	[32mDescription string[m
+[32m+[m	[32mPrice       float64[m
+[32m+[m	[32mImageURL    string[m
+[32m+[m[32m}[m
+[1mdiff --git a/static/menu.html b/static/menu.html[m
+[1mdeleted file mode 100644[m
+[1mindex 0437fdb..0000000[m
+[1m--- a/static/menu.html[m
+[1m+++ /dev/null[m
+[36m@@ -1,187 +0,0 @@[m
+[31m-<!DOCTYPE html>[m
+[31m-<html class="scroll-smooth" lang="de">[m
+[31m-<head>[m
+[31m-    <meta charset="utf-8"/>[m
+[31m-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>[m
+[31m-    <title>Speisekarte | Pizza Haus Sangerhausen</title>[m
+[31m-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>[m
+[31m-    <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;800&family=Be+Vietnam+Pro:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>[m
+[31m-    <script id="tailwind-config">[m
+[31m-        tailwind.config = {[m
+[31m-            darkMode: "class",[m
+[31m-            theme: {[m
+[31m-                extend: {[m
+[31m-                    "colors": {[m
+[31m-                        "surface-container": "#f0eded",[m
+[31m-                        "surface-tint": "#ac3322",[m
+[31m-                        "primary": "#801206",[m
+[31m-                        "on-surface": "#1b1c1c",[m
+[31m-                        "on-surface-variant": "#59413d",[m
+[31m-                    },[m
+[31m-                    "borderRadius": {[m
+[31m-                        "full": "9999px"[m
+[31m-                    },[m
+[31m-                },[m
+[31m-            },[m
+[31m-        }[m
+[31m-    </script>[m
+[31m-    <style>[m
+[31m-        .material-symbols-outlined {[m
+[31m-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;[m
+[31m-        }[m
+[31m-        .pizza-gradient {[m
+[31m-            background: linear-gradient(135deg, #801206 0%, #a12b1b 100%);[m
+[31m-        }[m
+[31m-    </style>[m
+[31m-</head>[m
+[31m-<body class="bg-surface font-body text-on-surface">[m
+[31m-<!-- Navigation -->[m
+[31m-<nav class="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl rounded-2xl bg-white/80 dark:bg-stone-900/80 backdrop-blur-xl flex justify-between items-center px-8 py-4 z-50 shadow-[0_20px_40px_rgba(27,28,28,0.06)]">[m
+[31m-    <div class="text-2xl font-bold font-headline tracking-tighter text-red-900">Pizza Haus Sangerhausen</div>[m
+[31m-    <div class="hidden md:flex gap-8 items-center">[m
+[31m-        <a href="/" class="pb-1 font-body transition-colors hover:text-red-700 text-stone-600">Startseite</a>[m
+[31m-        <a href="/menu" class="pb-1 font-body transition-colors hover:text-red-700 text-stone-600">Speisekarte</a>[m
+[31m-        <a href="/about" class="pb-1 font-body transition-colors hover:text-red-700 text-stone-600">Über uns</a>[m
+[31m-        <a href="/contact" class="pb-1 font-body transition-colors hover:text-red-700 text-stone-600">Kontakt</a>[m
+[31m-    </div>[m
+[31m-    <button class="bg-gradient-to-br from-red-900 to-red-700 text-white px-6 py-2.5 rounded-xl font-headline font-bold">[m
+[31m-        Jetzt bestellen[m
+[31m-    </button>[m
+[31m-</nav>[m
+[31m-[m
+[31m-<!-- Hero Section -->[m
+[31m-<header class="relative pt-32 pb-20 px-6 overflow-hidden bg-surface">[m
+[31m-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">[m
+[31m-        <div class="flex-1 space-y-6">[m
+[31m-            <span class="inline-block px-4 py-1.5 bg-tertiary-fixed text-on-tertiary-fixed rounded-full font-label text-xs tracking-wider uppercase">Artisanal Hearth</span>[m
+[31m-            <h1 class="text-5xl md:text-7xl font-headline font-extrabold tracking-tight text-on-surface leading-[1.1]">[m
+[31m-                Unsere <span class="text-primary italic">Meisterwerke</span>[m
+[31m-            </h1>[m
+[31m-            <p class="text-lg text-on-surface-variant max-w-lg font-body leading-relaxed">[m
+[31m-                Entdecken Sie die Verbindung aus traditioneller Handwerkskunst und modernem Geschmack. Jede Pizza wird frisch in unserem Steinofen für Sie zubereitet.[m
+[31m-            </p>[m
+[31m-        </div>[m
+[31m-        <div class="flex-1 relative">[m
+[31m-            <div class="absolute inset-0 bg-primary/5 rounded-full scale-110 blur-3xl"></div>[m
+[31m-            <img alt="Artisan Pizza" class="relative z-10 w-full h-[400px] object-cover rounded-xl shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLS8bnCb3n6tWDA78pTVTxHPG4ID3Lj18p2hyS5_N_uu54O2h0EKIVpUkGX7IpoT7-LWwaD-TZMrNCnOdOwgukQ8mT0rglvDBJaEDotILbTmxjT2fcwy3Ms30fSaT8Qq3wJruniJuiSNxmqPw"/>[m
+[31m-        </div>[m
+[31m-    </div>[m
+[31m-</header>[m
+[31m-[m
+[31m-<!-- Menu -->[m
+[31m-<main class="max-w-7xl mx-auto px-6 py-16">[m
+[31m-    <!-- Klassische Pizzen -->[m
+[31m-    <section class="space-y-12 pb-20">[m
+[31m-        <div class="flex items-end justify-between border-b border-outline-variant/30 pb-6">[m
+[31m-            <div>[m
+[31m-                <h2 class="text-4xl font-headline font-bold">Klassische Pizzen</h2>[m
+[31m-                <p class="text-on-surface-variant font-body mt-2">Die zeitlosen Favoriten aus unserem Steinofen.</p>[m
+[31m-            </div>[m
+[31m-        </div>[m
+[31m-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">[m
+[31m-            <!-- Pizza Card 1 -->[m
+[31m-            <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all">[m
+[31m-                <div class="h-64 overflow-hidden">[m
+[31m-                    <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQWBIP9u7FrGVY6do2GGuxwTKggsAFUKNW_S5YNq5m2_BCnQPT7jqbym2zHJ4RJXAl5fGlBD62hAZdM07RVrghFpwn-bKBZedVSjn5PeFBDbDxOKIL0TR8R-rMtK4MhbqVgYPE"/>[m
+[31m-                </div>[m
+[31m-                <div class="p-8">[m
+[31m-                    <h3 class="font-headline font-bold text-2xl mb-2">Margherita</h3>[m
+[31m-                    <p class="text-on-surface-variant font-body mb-8">Klassische Tomatensauce mit Mozzarella und frischem Basilikum</p>[m
+[31m-                    <div class="flex justify-between items-center">[m
+[31m-                        <span class="font-headline font-black text-2xl text-primary">12,00 €</span>[m
+[31m-                    </div>[m
+[31m-                </div>[m
+[31m-            </div>[m
+[31m-            <!-- Pizza Card 2 -->[m
+[31m-            <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all">[m
+[31m-                <div class="h-64 overflow-hidden">[m
+[31m-                    <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQWBIP9u7FrGVY6do2GGuxwTKggsAFUKNW_S5YNq5m2_BCnQPT7jqbym2zHJ4RJXAl5fGlBD62hAZdM07RVrghFpwn-bKBZedVSjn5PeFBDbDxOKIL0TR8R-rMtK4MhbqVgYPE"/>[m
+[31m-                </div>[m
+[31m-                <div class="p-8">[m
+[31m-                    <h3 class="font-headline font-bold text-2xl mb-2">Pepperoni</h3>[m
+[31m-                    <p class="text-on-surface-variant font-body mb-8">Würzige Qualitätspepperoni auf cremiger Tomatenbasis</p>[m
+[31m-                    <div class="flex justify-between items-center">[m
+[31m-                        <span class="font-headline font-black text-2xl text-primary">13,50 €</span>[m
+[31m-                    </div>[m
+[31m-                </div>[m
+[31m-            </div>[m
+[31m-            <!-- Pizza Card 3 -->[m
+[31m-            <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all">[m
+[31m-                <div class="h-64 overflow-hidden">[m
+[31m-                    <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQWBIP9u7FrGVY6do2GGuxwTKggsAFUKNW_S5YNq5m2_BCnQPT7jqbym2zHJ4RJXAl5fGlBD62hAZdM07RVrghFpwn-bKBZedVSjn5PeFBDbDxOKIL0TR8R-rMtK4MhbqVgYPE"/>[m
+[31m-                </div>[m
+[31m-                <div class="p-8">[m
+[31m-                    <h3 class="font-headline font-bold text-2xl mb-2">Carbonara</h3>[m
+[31m-                    <p class="text-on-surface-variant font-body mb-8">Mit Speck, Ei und Parmesan traditionell zubereitet</p>[m
+[31m-                    <div class="flex justify-between items-center">[m
+[31m-                        <span class="font-headline font-black text-2xl text-primary">14,50 €</span>[m
+[31m-                    </div>[m
+[31m-                </div>[m
+[31m-            </div>[m
+[31m-        </div>[m
+[31m-    </section>[m
+[31m-[m
+[31m-    <!-- Getränke -->[m
+[31m-    <section class="space-y-12 pb-16 border-t border-outline-variant/30 pt-20">[m
+[31m-        <div class="flex items-end justify-between">[m
+[31m-            <div>[m
+[31m-                <h2 class="text-4xl font-headline font-bold">Getränke</h2>[m
+[31m-                <p class="text-on-surface-variant font-body mt-2">Die perfekte Begleitung zu Ihrer Pizza.</p>[m
+[31m-            </div>[m
+[31m-        </div>[m
+[31m-        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-24 gap-y-8">[m
+[31m-            <!-- Drink Group 1 -->[m
+[31m-            <div class="space-y-6">[m
+[31m-                <h4 class="font-label text-xs uppercase tracking-widest text-on-surface-variant border-b border-outline-variant/20 pb-2">Alkoholfreie Klassiker</h4>[m
+[31m-                <div class="flex justify-between items-center">[m
+[31m-                    <div class="font-body">[m
+[31m-                        <p class="font-semibold">Wasser</p>[m
+[31m-                        <p class="text-sm text-on-surface-variant">0,5 L</p>[m
+[31m-                    </div>[m
+[31m-                    <span class="font-headline font-bold">€ 2,50</span>[m
+[31m-                </div>[m
+[31m-                <div class="flex justify-between items-center">[m
+[31m-                    <div class="font-body">[m
+[31m-                        <p class="font-semibold">Mineralwasser</p>[m
+[31m-                        <p class="text-sm text-on-surface-variant">0,5 L</p>[m
+[31m-                    </div>[m
+[31m-                    <span class="font-headline font-bold">€ 3,00</span>[m
+[31m-                </div>[m
+[31m-            </div>[m
+[31m-            <!-- Drink Group 2 -->[m
+[31m-            <div class="space-y-6">[m
+[31m-                <h4 class="font-label text-xs uppercase tracking-widest text-on-surface-variant border-b border-outline-variant/20 pb-2">Weine & Biere</h4>[m
+[31m-                <div class="flex justify-between items-center">[m
+[31m-                    <div class="font-body">[m
+[31m-                        <p class="font-semibold">Rotwein</p>[m
+[31m-                        <p class="text-sm text-on-surface-variant">Glas 0,2 L</p>[m
+[31m-                    </div>[m
+[31m-                    <span class="font-headline font-bold">€ 5,50</span>[m
+[31m-                </div>[m
+[31m-                <div class="flex justify-between items-center">[m
+[31m-                    <div class="font-body">[m
+[31m-                        <p class="font-semibold">Bier vom Fass</p>[m
+[31m-                        <p class="text-sm text-on-surface-variant">0,5 L</p>[m
+[31m-                    </div>[m
+[31m-                    <span class="font-headline font-bold">€ 4,00</span>[m
+[31m-                </div>[m
+[31m-            </div>[m
+[31m-        </div>[m
+[31m-    </section>[m
+[31m-</main>[m
+[31m-[m
+[31m-<!-- Footer -->[m
+[31m-<footer class="w-full bg-stone-100 dark:bg-stone-950 font-body text-sm flex flex-col md:flex-row justify-between items-center px-8 py-12 gap-6">[m
+[31m-    <div class="text-center md:text-left">[m
+[31m-        <div class="text-lg font-bold text-stone-900 mb-2">Pizza Haus Sangerhausen</div>[m
+[31m-        <p class="text-stone-500 max-w-sm leading-relaxed">[m
+[31m-            © 2024 Pizza Haus. Hüttenstraße 44, 06526 Sangerhausen. Tel: 03464 572396[m
+[31m-        </p>[m
+[31m-    </div>[m
+[31m-    <div class="flex gap-8">[m
+[31m-        <a class="text-stone-500 hover:text-stone-800 opacity-80 hover:opacity-100" href="#">Impressum</a>[m
+[31m-        <a class="text-stone-500 hover:text-stone-800 opacity-80 hover:opacity-100" href="#">Datenschutz</a>[m
+[31m-    </div>[m
+[31m-</footer>[m
+[31m-</body>[m
+[31m-</html>[m
