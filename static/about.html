@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="de">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;600;700;800&family=Be+Vietnam+Pro:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@500;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#801206",
+                        "on-surface": "#1b1c1c",
+                        "on-surface-variant": "#59413d",
+                        "secondary": "#944a00",
+                    },
+                },
+            }
+        }
+    </script>
+    <style>
+        .editorial-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased">
+
+<!-- Navigation -->
+<nav class="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl rounded-2xl bg-white/80 backdrop-blur-xl flex justify-between items-center px-8 py-4 z-50">
+    <div class="text-2xl font-bold font-headline text-red-900">Pizza Haus Sangerhausen</div>
+    <div class="hidden md:flex gap-8 items-center">
+        <a href="/" class="pb-1 font-body text-stone-600">Startseite</a>
+        <a href="/menu" class="pb-1 font-body text-stone-600">Speisekarte</a>
+        <a href="/about" class="pb-1 font-body text-stone-600">Über uns</a>
+        <a href="/contact" class="pb-1 font-body text-stone-600">Kontakt</a>
+    </div>
+    <button class="bg-gradient-to-br from-red-900 to-red-700 text-white px-6 py-2.5 rounded-xl font-headline font-bold">
+        Jetzt bestellen
+    </button>
+</nav>
+
+<main>
+    <!-- Hero Section -->
+    <section class="relative min-h-[921px] flex items-center pt-24 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img class="w-full h-full object-cover opacity-20 scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6GgKpB4KRvR5-TPblkw9aRLKy8-MSvLf4UYT0TQp67cGLxaC6fKU5K2QTztVrMAFlJYaCnakHzjH3jXqLJrH_XHCaOM4mZiQUc-wAYgjIjpl0rECFICLvv6qAAvkXiwHgW8WErkyASicJ0auCdBUVDoz15qCENvyGvzJfF8vUsEuiZBpyp73cwra_EHSOn3tp5wb4LQ03t-kRaPZ-0RSlYlrQLH8VNyYxQPNThEqFsYXcFlfs8AJGWEjaWAG2sap9fpOf3CuAZEw"/>
+            <div class="absolute inset-0 bg-gradient-to-b from-surface/0 via-surface/60 to-surface"></div>
+        </div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-4xl">
+                <span class="font-label text-secondary uppercase tracking-[0.2em] text-sm mb-6 block">Sangerhausen · Seit Generationen</span>
+                <h1 class="font-headline text-6xl md:text-8xl font-extrabold text-on-surface tracking-tight leading-[0.9] mb-8">
+                    Unsere <span class="text-primary italic">Geschichte</span>
+                </h1>
+                <p class="font-headline text-2xl md:text-3xl text-on-surface-variant font-light max-w-2xl leading-relaxed">
+                    Tradition trifft Leidenschaft in Sangerhausen. Wo jede Pizza eine Erzählung ist.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Roots Section -->
+    <section class="bg-surface-container-low py-24 md:py-32">
+        <div class="container mx-auto px-6">
+            <div class="editorial-grid gap-8 items-center">
+                <div class="col-span-12 lg:col-span-7 relative">
+                    <div class="aspect-[4/5] md:aspect-[16/10] overflow-hidden rounded-xl shadow-2xl">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtioAXy6uTF1vfBan3MJzk6wcxQYJ5HlEWgi-aoO_f9TnDFITkhjMuajnZKhmvhY9eNwvkfd5kiZYaIbGdJx-jdGhwLzW30YwK63INvIyiHWc6BGMxtQV0xkcCMVpMLpHPn4MxO5X1SHTDG_ApBuTaLX-dVixqKqJo7w4u3HgYpVZ4EjnFTBNEqNacWIJ0vSVvwzlLWAtWnyNStGXMNmqRXI2MAzpkHlrAekdNxiSIaZYPj_0WkTq_CgO8hXJnhB7QS-EIq41AI6k" class="w-full h-full object-cover"/>
+                    </div>
+                </div>
+                <div class="col-span-12 lg:col-span-5 lg:pl-12">
+                    <h2 class="font-headline text-4xl font-bold mb-8 text-primary">Ein Erbe aus Mehl und Feuer</h2>
+                    <div class="space-y-6 text-lg text-on-surface-variant leading-relaxed">
+                        <p>Seit mehr als drei Generationen backt die Familie Müller die beste Pizza Sangerhausens. Es begann in einem kleinen Laden mit einem alten Holzofen, den großvater Antonio noch selbst gebaut hatte.</p>
+                        <p>Was einmal als Leidenschaft begann, ist heute eine Tradition geworden. Jede Pizza wird mit der gleichen Sorgfalt zubereitet - handgeworfen, in echtem Feuer gebacken und mit den besten Zutaten belegt.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Craftsmanship Bento -->
+    <section class="py-24 bg-surface">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20">
+                <h2 class="font-headline text-5xl font-extrabold mb-4">Das Geheimnis der <span class="text-secondary">Handarbeit</span></h2>
+                <p class="text-on-surface-variant max-w-xl mx-auto">Warum wir keine Abkürzungen nehmen, wenn es um den perfekten Geschmack geht.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[300px]">
+                <div class="md:col-span-2 relative overflow-hidden rounded-xl bg-surface-container-high group">
+                    <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtioAXy6uTF1vfBan3MJzk6wcxQYJ5HlEWgi-aoO_f9TnDFITkhjMuajnZKhmvhY9eNwvkfd5kiZYaIbGdJx-jdGhwLzW30YwK63INvIyiHWc6BGMxtQV0xkcCMVpMLpHPn4MxO5X1SHTDG_ApBuTaLX-dVixqKqJo7w4u3HgYpVZ4EjnFTBNEqNacWIJ0vSVvwzlLWAtWnyNStGXMNmqRXI2MAzpkHlrAekdNxiSIaZYPj_0WkTq_CgO8hXJnhB7QS-EIq41AI6k"/>
+                    <div class="absolute inset-0 bg-black/40 p-8 flex flex-col justify-end">
+                        <h3 class="text-white font-headline font-bold text-2xl">Teigbereitung</h3>
+                        <p class="text-white/90 text-sm">48 Stunden Gärung für perfekten Geschmack</p>
+                    </div>
+                </div>
+                <div class="relative overflow-hidden rounded-xl bg-surface-container-high group">
+                    <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQWBIP9u7FrGVY6do2GGuxwTKggsAFUKNW_S5YNq5m2_BCnQPT7jqbym2zHJ4RJXAl5fGlBD62hAZdM07RVrghFpwn-bKBZedVSjn5PeFBDbDxOKIL0TR8R-rMtK4MhbqVgYPEHdrXyk14o_dzwIwjCJlBFdwNwh2dUI1E9dkx4FnArQEBK47Wz7qF0gefkA7BMKkY6WR4kUxFm5RdmgzJOvPSht9ibWpv3lmEzP3lbIvO3h6u23RaeRFSlM"/>
+                </div>
+                <div class="relative overflow-hidden rounded-xl bg-surface-container-high group">
+                    <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQkzlED-wmseF5XHOTqDgAtMV42q8Ms8EzdyQyn2T0P2OCeaz4rbavnxqZAsVUYHMe6EXzHm0Vxu83rl3N9m474nd5v8lWVi_npLzlnWTJzOOgUa8qyaTNiQ47CyagfNLmvsm6vKiHbgqMIxm59E-CkC88olK1Z6Gymj0sCEwt5Me152ebNXCPs07f0GUiktQf0Y2n8lHRth5iWIUu3LLzLPKUmXnYU6_0ogi7xqI8JXRAXVbg85ieREMtYxngfE1gQpjhQl6hXmk"/>
+                </div>
+                <div class="md:col-span-2 relative overflow-hidden rounded-xl bg-surface-container-high flex flex-col justify-center p-12">
+                    <span class="font-label text-primary font-bold mb-4">DER OFEN</span>
+                    <h3 class="font-headline text-3xl font-bold mb-4">Das Herzstück unserer Küche</h3>
+                    <p class="text-on-surface-variant max-w-lg leading-relaxed">
+                        Unser italienischer Steinofen wird mit Holz beheizt und erreicht Temperaturen über 900°C. Jede Pizza braucht nur 90 Sekunden für die perfekte Kruste.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section class="bg-surface-container-highest py-24">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-3xl mx-auto">
+                <span class="material-symbols-outlined text-primary text-5xl mb-6" style="font-variation-settings: 'FILL' 1;">favorite</span>
+                <h2 class="font-headline text-4xl md:text-5xl font-bold mb-8">Ein Teil von Sangerhausen</h2>
+                <p class="text-xl text-on-surface-variant italic mb-12">
+                    "Für uns ist Sangerhausen nicht nur ein Standort. Es ist die Nachbarschaft, die uns wachsen sah, die Freunde, die zu Stammgästen wurden, und der Ort, an dem wir unsere Liebe zum Kochen teilen."
+                </p>
+                <div class="flex flex-col md:flex-row justify-center items-center gap-12 text-left">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined">groups</span>
+                        </div>
+                        <div>
+                            <p class="font-bold">3.000+</p>
+                            <p class="text-sm text-on-surface-variant">Zufriedene Kunden täglich</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Map -->
+    <section class="py-24">
+        <div class="container mx-auto px-6">
+            <div class="bg-surface-container-low rounded-3xl overflow-hidden editorial-grid shadow-xl">
+                <div class="col-span-12 md:col-span-5 p-12 flex flex-col justify-center">
+                    <h3 class="font-headline text-3xl font-bold mb-6">Besuchen Sie uns</h3>
+                    <p class="text-on-surface-variant mb-8 leading-relaxed">
+                        Sie finden uns in der Hüttenstraße 44 in Sangerhausen. Wir freuen uns auf Ihren Besuch!
+                    </p>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="font-bold text-primary">Adresse</p>
+                            <p class="text-on-surface-variant">Hüttenstraße 44, 06526 Sangerhausen</p>
+                        </div>
+                        <div>
+                            <p class="font-bold text-primary">Telefon</p>
+                            <p class="text-on-surface-variant">03464 572396</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-12 md:col-span-7 h-[400px] min-h-[400px] relative">
+                    <img class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6qyMMZh7R2mxgk-c4hPe7beGeEtturwkMhguI1H_XlEqaxp8MeNiZ07wvwpAyOg2delVqowiGy9R9y045a8n_hoGPq8QEUyExE-APNTp4_rklfcsIXTa9PEh1INXMqkZbmGxAryAfXAy13ZJEmmTWOOP6pMgEmHNXDdVvo4DzT1dIswaQUgQdiQVTTVXowUn7N5cO5aiQU2iJbLteiQveG2bmU-riFHWDUbY6mhoz6jp9ibWpv3lmEzP3lbIvO3h6u23RaeRFSlM"/>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-stone-100 dark:bg-stone-950 w-full">
+    <div class="flex flex-col md:flex-row justify-between items-center px-8 py-12 gap-6 max-w-7xl mx-auto">
+        <div class="flex flex-col items-center md:items-start">
+            <div class="text-lg font-bold text-stone-900 dark:text-stone-100 font-headline mb-2">Pizza Haus Sangerhausen</div>
+            <p class="text-stone-500 font-body text-sm text-center md:text-left">
+                © 2024 Pizza Haus. Hüttenstraße 44, 06526 Sangerhausen. Tel: 03464 572396
+            </p>
+        </div>
+        <div class="flex gap-8">
+            <a class="text-stone-500 font-body text-sm hover:text-stone-800 opacity-80 hover:opacity-100" href="#">Impressum</a>
+            <a class="text-stone-500 font-body text-sm hover:text-stone-800 opacity-80 hover:opacity-100" href="#">Datenschutz</a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

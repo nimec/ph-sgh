@@ -1,4 +1,4 @@
-# Pizzeria Sangerhausen - Website in Go
++# Pizzeria Sangerhausen - Website in Go
 
 Eine Pizzeria-Website, geschrieben in Go mit einem eingebauten HTTP-Server.
 

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html class="light" lang="de">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;700;800;900&family=Be+Vietnam+Pro:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#dcd9d9",
+                        "on-secondary-container": "#663100",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#e9e2d3",
+                        "on-tertiary-container": "#d3ccbd",
+                        "on-secondary-fixed-variant": "#713700",
+                        "inverse-surface": "#303030",
+                        "outline-variant": "#e0bfb9",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#4b463c",
+                        "surface": "#fcf9f8",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#8c716c",
+                        "tertiary-fixed-dim": "#cdc6b8",
+                        "surface-variant": "#e4e2e1",
+                        "primary": "#801206",
+                        "on-secondary": "#ffffff",
+                        "background": "#fcf9f8",
+                        "on-secondary-fixed": "#301400",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#8b1a0d",
+                        "secondary-fixed": "#ffdcc5",
+                        "on-primary-container": "#ffbcb0",
+                        "surface-container": "#f0eded",
+                        "on-tertiary-fixed": "#1e1b13",
+                        "surface-container-high": "#eae7e7",
+                        "primary-fixed-dim": "#ffb4a7",
+                        "on-surface-variant": "#59413d",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#ffb783",
+                        "surface-tint": "#ac3322",
+                        "on-surface": "#1b1c1c",
+                        "secondary-container": "#fc8f34",
+                        "inverse-on-surface": "#f3f0f0"
+                    },
+                    "borderRadius": {
+                        "full": "9999px"
+                    },
+                    "fontFamily": {}
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(128, 18, 6, 0.9) 0%, rgba(161, 43, 27, 0.7) 100%);
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(255, 188, 176, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+<!-- TopNavBar -->
+<nav class="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl rounded-2xl bg-white/80 dark:bg-stone-900/80 backdrop-blur-xl flex justify-between items-center px-8 py-4 z-50 shadow-[0_20px_40px_rgba(27,28,28,0.06)]">
+    <div class="text-2xl font-bold font-headline tracking-tighter text-red-900 dark:text-red-50">Pizza Haus Sangerhausen</div>
+    <div class="hidden md:flex gap-8 items-center">
+        <a href="/" class="pb-1 font-body transition-colors hover:text-red-700 text-stone-600 dark:text-stone-400">Startseite</a>
+        <a href="/menu" class="pb-1 font-body transition-colors hover:text-red-700 text-stone-600 dark:text-stone-400">Speisekarte</a>
+        <a href="/about" class="pb-1 font-body transition-colors hover:text-red-700 text-stone-600 dark:text-stone-400">Über uns</a>
+        <a href="/contact" class="pb-1 font-body transition-colors hover:text-red-700 text-stone-600 dark:text-stone-400">Kontakt</a>
+    </div>
+    <button class="bg-gradient-to-br from-red-900 to-red-700 text-white px-6 py-2.5 rounded-xl font-headline font-bold scale-95 active:scale-90 transition-transform">
+        Jetzt bestellen
+    </button>
+</nav>
+
+<main>
+    <!-- Hero Section -->
+    <!-- Today's Specials (Bento Grid) -->
+    <section class="py-24 bg-surface pt-32">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
+                <div class="max-w-xl">
+                    <h2 class="font-headline font-black text-4xl md:text-5xl text-primary tracking-tight mb-4">Heutige Angebote</h2>
+                    <p class="text-on-surface-variant font-body text-lg">Täglich frisch zusammengestellt von unseren Meistern mit saisonalen Zutaten vom Markt.</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                <!-- Featured Special -->
+                <div class="md:col-span-7 group relative overflow-hidden rounded-[2rem] bg-surface-container-low min-h-[450px]">
+                    <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9VFigYdoKsRwalSNxEKfGmO9_NL-N0nHL-HU8G6Um6V6iNq-Tu27MR52dwXGUvbJaQtoMLGFgVjH5Ql7i5aapCQuDkFqTtCqnKQqcSl_5JU6Gyks1nbPtR2xDmr3OdI65gZxpJ957K9mYgRzWU6Z-s7CBzZXFX6YFyhhaIE3GwIMu8FBcwrZb9WDpOLEpTN7NnajFKtfqgvxCpVq8gyOKHTjFTaW9qfLXNyccC9W0Qo1o0VFe2HoyLuYVX4tFdFOf_DXQx6tunxo"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                    <div class="absolute bottom-0 p-8 md:p-12">
+                        <h3 class="text-white font-headline font-black text-3xl md:text-4xl mb-2">Prosciutto di Parma</h3>
+                        <p class="text-white/90 max-w-md font-body mb-6">Luftgetrocknete italienische Schinken mit wildem Rucola und Parmesanspänen</p>
+                    </div>
+                </div>
+                <!-- Secondary Specials Stack -->
+                <div class="md:col-span-5 flex flex-col gap-6">
+                    <div class="flex-1 bg-surface-container-high rounded-[2rem] p-8 flex flex-col justify-between group">
+                        <h3 class="font-headline font-bold text-lg">Vegetarische Auswahl</h3>
+                        <p class="text-sm text-on-surface-variant mt-2">Frische Gemüse des Marktes</p>
+                    </div>
+                    <div class="flex-1 bg-primary text-on-primary rounded-[2rem] p-8 flex flex-col justify-between group">
+                        <h3 class="font-headline font-bold text-lg">Glutenfrei</h3>
+                        <p class="text-sm text-on-primary/80 mt-2">Für alle Gäste mit Glutenunverträglichkeit</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Customer Favorites -->
+    <section class="py-24 bg-surface-container-low">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="font-headline font-black text-4xl md:text-5xl text-on-surface tracking-tight mb-4">Kunden-Favoriten</h2>
+                <p class="text-on-surface-variant font-body text-lg">Die Klassiker, die unseren Ruf begründet haben. Handgemacht, feuergeküsst und immer frisch.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Favorite Card 1 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-[0_20px_40px_rgba(27,28,28,0.04)] hover:shadow-xl transition-all duration-300">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQWBIP9u7FrGVY6do2GGuxwTKggsAFUKNW_S5YNq5m2_BCnQPT7jqbym2zHJ4RJXAl5fGlBD62hAZdM07RVrghFpwn-bKBZedVSjn5PeFBDbDxOKIL0TR8R-rMtK4MhbqVgYPEHdrXyk14o_dzwIwjCJlBFdwNwh2dUI1E9dkx4FnArQEBK47Wz7qF0gefkA7BMKkY6WR4kUxFm5RdmgzJOvPSht9ibWpv3lmEzP3lbIvO3h6u23RaeRFSlM" class="w-full h-full object-cover" />
+                    </div>
+                    <div class="p-8">
+                        <h3 class="font-headline font-bold text-xl mb-2">Margherita</h3>
+                        <p class="text-on-surface-variant">Klassische Basis mit frischem Mozzarella</p>
+                    </div>
+                </div>
+                <!-- Favorite Card 2 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-[0_20px_40px_rgba(27,28,28,0.04)] hover:shadow-xl transition-all duration-300">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQWBIP9u7FrGVY6do2GGuxwTKggsAFUKNW_S5YNq5m2_BCnQPT7jqbym2zHJ4RJXAl5fGlBD62hAZdM07RVrghFpwn-bKBZedVSjn5PeFBDbDxOKIL0TR8R-rMtK4MhbqVgYPEHdrXyk14o_dzwIwjCJlBFdwNwh2dUI1E9dkx4FnArQEBK47Wz7qF0gefkA7BMKkY6WR4kUxFm5RdmgzJOvPSht9ibWpv3lmEzP3lbIvO3h6u23RaeRFSlM" class="w-full h-full object-cover" />
+                    </div>
+                    <div class="p-8">
+                        <h3 class="font-headline font-bold text-xl mb-2">Pepperoni</h3>
+                        <p class="text-on-surface-variant">Würzige Qualitätspepperoni</p>
+                    </div>
+                </div>
+                <!-- Favorite Card 3 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-[0_20px_40px_rgba(27,28,28,0.04)] hover:shadow-xl transition-all duration-300">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQWBIP9u7FrGVY6do2GGuxwTKggsAFUKNW_S5YNq5m2_BCnQPT7jqbym2zHJ4RJXAl5fGlBD62hAZdM07RVrghFpwn-bKBZedVSjn5PeFBDbDxOKIL0TR8R-rMtK4MhbqVgYPEHdrXyk14o_dzwIwjCJlBFdwNwh2dUI1E9dkx4FnArQEBK47Wz7qF0gefkA7BMKkY6WR4kUxFm5RdmgzJOvPSht9ibWpv3lmEzP3lbIvO3h6u23RaeRFSlM" class="w-full h-full object-cover" />
+                    </div>
+                    <div class="p-8">
+                        <h3 class="font-headline font-bold text-xl mb-2">Carbonara</h3>
+                        <p class="text-on-surface-variant">Mit Speck und Ei traditionell zubereitet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Artisanal Promise (Quality Section) -->
+    <section class="py-24 bg-surface-container-highest">
+        <div class="container mx-auto px-6 grid md:grid-cols-2 items-center gap-16">
+            <div>
+                <h2 class="font-headline font-black text-4xl md:text-5xl text-primary mb-8 leading-tight">Das Geheimnis sind die <span class="text-secondary">48 Stunden Wartezeit.</span></h2>
+                <div class="space-y-8">
+                    <div class="flex gap-4">
+                        <span class="material-symbols-outlined text-primary text-2xl">check_circle</span>
+                        <div>
+                            <h4 class="font-headline font-bold">100% Bio-Mehl</h4>
+                            <p class="text-on-surface-variant text-sm">Aus kontrolliertem biologischem Anbau</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="relative">
+                <img class="rounded-[3rem] w-full shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUL21nepP2cNeOnnrXmslABh6IamHdPCaOxo7Xo3KCIVmkXpjza3iFKZFSouaranVV9D7m-_7ML17xw-K4uS4RqqVwi6ykn0zwtZ0ajRz6rnywgkrDBx_1mg7S8zYuTQBx51aqVuaYmROwUfO1J6b2DH0KoC_7rjHl1qMSOxfTSI9X4l9yLZwUlBu6SCQnAdHKRgn5qWLBlBkesUlWGoZhIQTFGx7-A0m46MXBzunAsIiR995Ls1iw5tMaAzvXDDdExJnnKfADZYI"/>
+                <div class="absolute -bottom-6 -left-6 bg-white p-8 rounded-3xl shadow-xl max-w-[200px]">
+                    <span class="block font-headline font-black text-4xl text-secondary">100%</span>
+                    <p class="font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant">Bio-Mehl Typ 00</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-stone-200 dark:bg-stone-950 flex flex-col md:flex-row justify-between items-center px-12 py-16 w-full mt-auto">
+    <div class="mb-8 md:mb-0">
+        <div class="font-headline font-black text-stone-900 dark:text-stone-100 text-2xl mb-2">Pizza Haus</div>
+        <p class="font-body text-stone-500 text-sm max-w-xs">Hüttenstraße 44, 06526 Sangerhausen<br/>Tel: 03464 572396<br/>© 2024 Pizza Haus Pizzeria.</p>
+    </div>
+    <div class="flex flex-wrap justify-center gap-12 mb-8 md:mb-0">
+        <div class="flex flex-col gap-4">
+            <span class="font-be-vietnam-pro text-sm uppercase tracking-widest text-red-800 dark:text-red-500 font-bold">Speisekarte</span>
+            <a class="font-be-vietnam-pro text-sm uppercase tracking-widest text-stone-500 hover:text-red-600 underline-offset-4 hover:underline transition-opacity opacity-80 hover:opacity-100" href="/menu">Rote Basis</a>
+        </div>
+        <div class="flex flex-col gap-4">
+            <span class="font-be-vietnam-pro text-sm uppercase tracking-widest text-red-800 dark:text-red-500 font-bold">Marke</span>
+            <a class="font-be-vietnam-pro text-sm uppercase tracking-widest text-stone-500 hover:text-red-600 underline-offset-4 hover:underline transition-opacity opacity-80 hover:opacity-100" href="/about">Unsere Geschichte</a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="de">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Kontakt - Pizza Haus Sangerhausen</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;800&family=Be+Vietnam+Pro:wght@400;500;700&family=Plus+Jakarta+Sans:wght@500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#ac3322",
+                        "primary": "#801206",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#1b1c1c",
+                        "on-surface-variant": "#59413d",
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #801206 0%, #a12b1b 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-fixed">
+
+<!-- Navigation -->
+<header class="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl rounded-2xl bg-white/80 backdrop-blur-xl z-50 flex justify-between items-center px-8 py-4">
+    <div class="text-2xl font-bold font-headline tracking-tight text-primary">
+        Pizza Haus Sangerhausen
+    </div>
+    <div class="hidden md:flex gap-8 items-center">
+        <a href="/" class="pb-1 font-body text-stone-600">Startseite</a>
+        <a href="/menu" class="pb-1 font-body text-stone-600">Speisekarte</a>
+        <a href="/about" class="pb-1 font-body text-stone-600">Über uns</a>
+        <a href="/contact" class="pb-1 font-body text-stone-600">Kontakt</a>
+    </div>
+    <a class="hidden md:flex items-center gap-2 bg-primary text-on-primary px-5 py-2.5 rounded-full hero-gradient font-label text-sm font-semibold" href="tel:03464572396">
+        <span class="material-symbols-outlined text-sm">call</span>
+        Jetzt anrufen
+    </a>
+</header>
+
+<main class="pt-32 pb-24">
+    <!-- Hero Section -->
+    <section class="max-w-7xl mx-auto px-6 mb-20">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="font-label text-primary font-bold tracking-widest text-xs uppercase mb-4 block">Wir freuen uns auf Sie</span>
+                <h1 class="text-5xl md:text-7xl font-headline font-extrabold tracking-tighter text-on-surface mb-6">
+                    Lassen Sie von sich hören.
+                </h1>
+                <p class="text-lg text-on-surface-variant max-w-lg leading-relaxed">
+                    Haben Sie Fragen zu unseren Zutaten oder möchten Sie Feedback geben? Unser Team in Sangerhausen ist für Sie da.
+                </p>
+            </div>
+            <div class="relative h-[400px] rounded-3xl overflow-hidden shadow-xl">
+                <img alt="Rustic pizza oven" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDe6C5kWzcQje3tc2pMUd-Igt83ndKya9Up1A1onph-7q8qStsG3GDwOH2z3KA7tJTpITTQmbfP4zS33crhTD6OuRmpeWnHwVDgIMd5Cl03EBU_i9ZUJPisSiNNYXAKk3CYcMics3Rn8YaMWXFjqGyU070KxrCf7Q6IeSM0HgNOnxqPhJjMKsox7kaeV-FKycCeb1TEjnwvZOue3UaeFIZdgRIsqrQr-cP-KRWwM6n2II-17U8yudUc-P5AoNDBDDYBlgU7yBNDus"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-on-surface/40 to-transparent"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Information Bento Grid -->
+    <section class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-6 mb-24">
+        <!-- Location Card -->
+        <div class="bg-surface-container p-10 rounded-3xl flex flex-col justify-between min-h-[320px]">
+            <div>
+                <div class="w-12 h-12 bg-primary-fixed rounded-2xl flex items-center justify-center text-primary mb-6">
+                    <span class="material-symbols-outlined">location_on</span>
+                </div>
+                <h3 class="text-2xl font-headline font-bold mb-4">Besuchen Sie uns</h3>
+                <p class="text-on-surface-variant leading-relaxed">
+                    Hüttenstraße 44<br/>
+                    06526 Sangerhausen
+                </p>
+            </div>
+            <a class="text-primary font-bold flex items-center gap-2 hover:gap-3 transition-all">
+                Route planen <span class="material-symbols-outlined">arrow_forward</span>
+            </a>
+        </div>
+
+        <!-- Opening Hours Card -->
+        <div class="bg-primary text-on-primary p-10 rounded-3xl min-h-[320px] hero-gradient">
+            <div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center mb-6">
+                <span class="material-symbols-outlined">schedule</span>
+            </div>
+            <h3 class="text-2xl font-headline font-bold mb-6 text-on-primary">Öffnungszeiten</h3>
+            <ul class="space-y-3 font-label">
+                <li class="flex justify-between border-b border-white/10 pb-2">
+                    <span>Mo - Do</span>
+                    <span class="font-bold">11:00 - 22:00</span>
+                </li>
+                <li class="flex justify-between border-b border-white/10 pb-2">
+                    <span>Fr - Sa</span>
+                    <span class="font-bold">11:00 - 23:30</span>
+                </li>
+                <li class="flex justify-between">
+                    <span>So</span>
+                    <span class="font-bold">12:00 - 21:00</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Contact Card -->
+        <div class="bg-surface-container-high p-10 rounded-3xl flex flex-col justify-between min-h-[320px]">
+            <div>
+                <div class="w-12 h-12 bg-secondary-fixed rounded-2xl flex items-center justify-center text-secondary mb-6">
+                    <span class="material-symbols-outlined">call</span>
+                </div>
+                <h3 class="text-2xl font-headline font-bold mb-4">Direkter Draht</h3>
+                <p class="text-on-surface-variant leading-relaxed mb-1">
+                    Telefonische Bestellungen unter:
+                </p>
+                <a class="text-3xl font-headline font-extrabold text-on-surface hover:text-primary" href="tel:03464572396">
+                    03464 572396
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12">
+        <div class="bg-surface-container-low p-8 md:p-12 rounded-[2rem]">
+            <h2 class="text-3xl font-headline font-bold mb-4">Schreiben Sie uns</h2>
+            <p class="text-on-surface-variant mb-10">Für allgemeine Anfragen nutzen Sie bitte unser Kontaktformular. Wir antworten innerhalb von 24 Stunden.</p>
+            <form class="space-y-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block font-label text-sm font-semibold mb-2">Name</label>
+                        <input class="w-full bg-surface-container-highest border-none rounded-xl p-4 focus:ring-2 focus:ring-primary/40" type="text" placeholder="Ihr Name"/>
+                    </div>
+                    <div>
+                        <label class="block font-label text-sm font-semibold mb-2">Email</label>
+                        <input class="w-full bg-surface-container-highest border-none rounded-xl p-4 focus:ring-2 focus:ring-primary/40" type="email" placeholder="Ihre Email"/>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-label text-sm font-semibold mb-2 ml-2">Nachricht</label>
+                    <textarea class="w-full bg-surface-container-highest border-none rounded-xl p-4 focus:ring-2 focus:ring-primary/40" placeholder="Wie können wir Ihnen helfen?" rows="4"></textarea>
+                </div>
+                <button class="w-full py-4 hero-gradient text-on-primary font-bold rounded-xl shadow-lg shadow-primary/20" type="submit">
+                    Nachricht senden
+                </button>
+            </form>
+        </div>
+
+        <!-- Map -->
+        <div class="relative rounded-[2rem] overflow-hidden min-h-[500px] shadow-sm">
+            <div class="absolute inset-0 bg-stone-200"></div>
+            <img alt="Map of Sangerhausen" class="absolute inset-0 w-full h-full object-cover grayscale opacity-90" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDv1_o9CKR2onHPUpKmwBMfX6yY1cnXkL5rt1BFWnc8rGa2BnTatEBQCS2lML2hGVZ96PpZ0ucuu7EskbNMsbjqtx33jB6mhFXG7_BBHV2nGbSBCzh8pdbHvLxWx1T519U-zkWwXEVJE_lq6LtMYCphDIikBKcAVByGk7ptyDu0W3DU2WK1tBw4qktd5-Firc6C8JpztkhM_u89ybmgEXvYrI65RZ1ToY_S9cVN1v372D4WVw0v83q3CHJIklXfI4f9GyTisP6DSD4"/>
+            <div class="absolute bottom-8 left-8 right-8 bg-white/90 backdrop-blur-xl p-6 rounded-2xl shadow-2xl flex items-center gap-6">
+                <div class="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
+                    <img alt="Pizza Haus" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7SUr8Lok-vr2GKMRW8jRdsNvYK2n-mscAQ6T_vuBykgvRflerFnlIWJonglIblrUd86q9tIqrmNylGR4SdxU8IWkijLnVlcdjgfe7o6Q7wecKkisD3bH9uVMrL24xJge1YX3-JXQSt9nKVivOYH4idV9Ekalf1cJwWG2oY1SGb_SKYeG-jjH7fJJR0W9Z18dI_LcHugP7rtA8NTKWyHWNUJUVrDmaPU0HCPuqQodPSdPvnWmG9R-8aNIoTHiTOaRN80Npv1Pb0jg"/>
+                </div>
+                <div>
+                    <h4 class="font-headline font-bold text-on-surface">Pizza Haus Sangerhausen</h4>
+                    <p class="text-sm text-on-surface-variant">Hüttenstraße 44, 06526</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-stone-100 dark:bg-stone-950 w-full border-t border-transparent">
+    <div class="flex flex-col md:flex-row justify-between items-center px-8 py-12 gap-6 max-w-7xl mx-auto">
+        <div class="text-lg font-bold text-stone-900 dark:text-stone-100 font-headline">
+            Pizza Haus Sangerhausen
+        </div>
+        <div class="text-stone-500 font-body text-sm text-center md:text-left max-w-md">
+            © 2024 Pizza Haus. Hüttenstraße 44, 06526 Sangerhausen. Tel: 03464 572396
+        </div>
+        <div class="flex gap-6">
+            <a class="text-stone-500 hover:text-stone-800 transition-opacity opacity-80 hover:opacity-100 text-sm" href="#">Impressum</a>
+            <a class="text-stone-500 hover:text-stone-800 transition-opacity opacity-80 hover:opacity-100 text-sm" href="#">Datenschutz</a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
