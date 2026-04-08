@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin-Bereich | Pizza Haus</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+    <div class="container mx-auto px-4 py-10">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">Speisekarte Verwalten</h1>
+            <a href="/menu" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded shadow transition">
+                ← Zum Menü
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <div class="lg:col-span-1">
+                <div class="bg-white p-6 rounded-xl shadow-lg sticky top-6">
+                    <h2 class="text-xl font-semibold mb-4 text-red-800 border-b pb-2">Neues Gericht</h2>
+                    <form action="/admin/save" method="POST" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Name</label>
+                            <input type="text" name="name" required placeholder="z.B. Pizza Mista"
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-red-500 focus:border-red-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Nr.</label>
+                            <input type="text" name="menu_number" placeholder="z.B. 02a"
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-red-500 focus:border-red-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Beschreibung</label>
+                            <textarea name="description" rows="3" placeholder="Zutaten..."
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-red-500 focus:border-red-500"></textarea>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Preis (€)</label>
+                                <input type="number" name="price" step="0.01" required placeholder="8.50"
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-red-500 focus:border-red-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Kategorie</label>
+                                <select name="category"
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+                                    <option value="Pizza">Pizza</option>
+                                    <option value="Pasta">Pasta</option>
+                                    <option value="Salat">Salat</option>
+                                    <option value="Getränke">Getränke</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full bg-red-700 hover:bg-red-800 text-white font-bold py-3 rounded-lg shadow-md transition duration-200">
+                            Hinzufügen
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Name</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Kategorie</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Preis</th>
+                                <th
+                                    class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Aktion</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200 text-sm">
+                            {{range .}}
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4">
+                                    <div class="font-bold text-gray-900">{{.Name}}</div>
+                                    <div class="text-gray-500 text-xs truncate max-w-xs">{{.Description}}</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                        {{.Category}}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 font-bold text-gray-700">
+                                    {{printf "%.2f" .Price}} €
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <a href="/admin/delete?id={{.ID}}"
+                                        onclick="return confirm('Möchten Sie dieses Gericht wirklich löschen?')"
+                                        class="text-red-600 hover:text-red-900 font-bold uppercase text-xs">Löschen</a>
+                                </td>
+                            </tr>
+                            {{else}}
+                            <tr>
+                                <td colspan="4" class="px-6 py-10 text-center text-gray-400">
+                                    Keine Gerichte in der Datenbank gefunden.
+                                </td>
+                            </tr>
+                            {{end}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

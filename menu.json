@@ -1,0 +1,21 @@
+[
+  { "menu_number": "1", "name": "Pizza mit Tomaten und Käse", "description": "Standardbasis", "price": 7.50, "category": "Pizza" },
+  { "menu_number": "2", "name": "Pizza mit Paprika", "description": "Frische Paprika", "price": 8.00, "category": "Pizza" },
+  { "menu_number": "3", "name": "Pizza mit Zwiebeln", "description": "Zwiebeln", "price": 8.00, "category": "Pizza" },
+  { "menu_number": "4", "name": "Pizza mit Salami", "description": "Würzige Salami", "price": 8.50, "category": "Pizza" },
+  { "menu_number": "5", "name": "Pizza mit Champignons", "description": "Frische Champignons", "price": 8.50, "category": "Pizza" },
+  { "menu_number": "6", "name": "Pizza mit Schinken", "description": "Vorderschinken", "price": 8.50, "category": "Pizza" },
+  { "menu_number": "7", "name": "Pizza mit Artischocken", "description": "Artischocken", "price": 8.50, "category": "Pizza" },
+  { "menu_number": "8", "name": "Pizza mit Sardellen, Oliven und Knoblauch", "description": "Herzhafte Kombination", "price": 9.00, "category": "Pizza" },
+  { "menu_number": "9", "name": "Pizza mit Thunfisch", "description": "Thunfisch", "price": 9.00, "category": "Pizza" },
+  { "menu_number": "10", "name": "Pizza mit Salami und Paprika", "description": "Salami und frische Paprika", "price": 9.00, "category": "Pizza" },
+  { "menu_number": "11", "name": "Pizza mit Schinken und Ananas", "description": "Klassische Pizza Hawaii", "price": 9.50, "category": "Pizza" },
+  { "menu_number": "12", "name": "Pizza mit Salami und Champignons", "description": "Salami und frische Champignons", "price": 9.50, "category": "Pizza" },
+  { "menu_number": "13", "name": "Pizza mit Peperoniwurst und frischen Tomaten", "description": "Scharfe Wurst und Tomatenscheiben", "price": 9.50, "category": "Pizza" },
+  { "menu_number": "14", "name": "Pizza mit Rindknoblauchwurst und frischen Tomaten", "description": "Spezielle Knoblauchwurst", "price": 9.50, "category": "Pizza" },
+  { "menu_number": "15", "name": "Pizza mit Salami, Schinken und Paprika", "description": "Drei Beläge Mix", "price": 10.00, "category": "Pizza" },
+  { "menu_number": "16", "name": "Pizza mit Champignons, Oliven, Peperoni und Zwiebeln", "description": "Vegetarischer Mix", "price": 10.00, "category": "Pizza" },
+  { "menu_number": "17", "name": "Pizza mit Lachs", "description": "Feiner Lachs", "price": 9.50, "category": "Pizza" },
+  { "menu_number": "18", "name": "Pizza mit Krabben", "description": "Meeresfrüchte-Krabben", "price": 9.50, "category": "Pizza" },
+  { "menu_number": "19", "name": "Pizza mit Lachs und Krabben", "description": "Lachs und Krabben Kombi", "price": 11.50, "category": "Pizza" }
+]

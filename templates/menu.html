@@ -95,7 +95,7 @@
                 <div class="p-4 border rounded-xl shadow-sm bg-white">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h3 class="font-bold text-lg">{{.ID}}. {{.Name}}</h3>
+                            <h3 class="font-bold text-lg">{{.MenuNumber}}.{{.Name}}</h3>
                             <p class="text-gray-600 text-sm">{{.Description}}</p>
                         </div>
                         <span class="font-bold text-red-700">{{printf "%.2f" .Price}} €</span>
@@ -114,7 +114,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {{range .Pastas}}
                 <div class="p-4 border rounded-xl shadow-sm bg-white">
-                    <h3 class="font-bold text-lg">{{.ID}}. {{.Name}}</h3>
+                    <h3 class="font-bold text-lg">{{.MenuNumber}}. {{.Name}}</h3>
                     <p class="text-gray-600 text-sm">{{.Description}}</p>
                     <span class="font-bold text-red-700">{{printf "%.2f" .Price}} €</span>
                 </div>

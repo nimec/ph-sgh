@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/glebarez/sqlite" // English comment: Pure Go SQLite driver (no CGO needed)
 	"gorm.io/gorm"
@@ -21,6 +22,9 @@ func main() {
 	http.HandleFunc("/menu", handleMenu)
 	http.HandleFunc("/about", handleAbout)
 	http.HandleFunc("/contact", handleContact)
+	http.HandleFunc("/admin/delete", handleDelete)
+	http.HandleFunc("/admin/save", handleSave)
+	http.HandleFunc("/admin", handleAdmin)
 
 	// API handlers
 	http.HandleFunc("/api/order", handleOrder)
@@ -94,6 +98,78 @@ func handleOrder(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Fprint(w, `{"status": "Bestellung angenommen"}`)
 }
+func handleAdmin(w http.ResponseWriter, r *http.Request) {
+	var products []Product
+	// English comment: Fetch all products from DB to display in the admin table
+	db.Find(&products)
+
+	tmpl, err := template.ParseFiles("templates/admin.html")
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	// English comment: Pass the list of products to the template
+	tmpl.Execute(w, products)
+}
+func handleDelete(w http.ResponseWriter, r *http.Request) {
+	// English comment: Get ID from URL query, e.g., /admin/delete?id=10
+	id := r.URL.Query().Get("id")
+
+	if id != "" {
+		// English comment: GORM perform a soft delete (or hard delete if no DeletedAt field)
+		db.Delete(&Product{}, id)
+	}
+
+	// English comment: Redirect back to admin panel
+	http.Redirect(w, r, "/admin", http.StatusSeeOther)
+}
+
+// handleSave processes the form submission to create a new product
+func handleSave(w http.ResponseWriter, r *http.Request) {
+	// Only allow POST requests for data submission
+	if r.Method != http.MethodPost {
+		http.Redirect(w, r, "/admin", http.StatusSeeOther)
+		return
+	}
+
+	// Parse form values from the request body
+	// Equivalent to @RequestParam or request.getParameter() in Java
+	name := r.FormValue("name")
+	description := r.FormValue("description")
+	category := r.FormValue("category")
+	menu_number := r.FormValue("menu_number")
+
+	// Convert the price string to a float64
+	// In Go, we must explicitly handle the conversion and potential error
+	price, err := strconv.ParseFloat(r.FormValue("price"), 64)
+	if err != nil {
+		log.Printf("Invalid price input: %v", err)
+		price = 0.0
+	}
+
+	// Create a new Product instance with the form data
+	newProduct := Product{
+		Name:        name,
+		MenuNumber:  menu_number,
+		Description: description,
+		Price:       price,
+		Category:    category,
+	}
+
+	// Persist the new product to the database using GORM
+	// Similar to repository.save(entity) in Spring Data JPA
+	result := db.Create(&newProduct)
+	if result.Error != nil {
+		log.Printf("Database error: %v", result.Error)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	// Redirect back to the admin dashboard after successful save
+	// This follows the Post/Redirect/Get pattern
+	http.Redirect(w, r, "/admin", http.StatusSeeOther)
+}
 
 var db *gorm.DB
 
@@ -127,6 +203,7 @@ type Product struct {
 	gorm.Model
 	ID          int
 	Name        string
+	MenuNumber  string // English comment: Store numbers like "01" or "02a"
 	Description string
 	Price       float64
 	Category    string // English comment: To distinguish between Pizza, Pasta, etc.
