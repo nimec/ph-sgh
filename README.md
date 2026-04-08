@@ -1,45 +1,45 @@
-# Пиццерия - Сайт на Go
+# Pizzeria Sangerhausen - Website in Go
 
-Веб-сайт пиццерии, написанный на Go с использованием встроенного http сервера.
+Eine Pizzeria-Website, geschrieben in Go mit einem eingebauten HTTP-Server.
 
-## Начало работы
+## Erste Schritte
 
-### Требования
-- Go 1.21 или выше
+### Anforderungen
+- Go 1.21 oder höher
 
-### Установка и запуск
+### Installation und Ausführung
 
 ```bash
-# Клонировать репозиторий
+# Repository klonen
 git clone https://github.com/nimec/ph-sgh.git
 cd ph-sgh
 
-# Запустить приложение
+# Anwendung starten
 go run main.go
 ```
 
-Сервер будет доступен по адресу: `http://localhost:8080`
+Der Server ist verfügbar unter: `http://localhost:8080`
 
-## Структура проекта
+## Projektstruktur
 
 ```
 ph-sgh/
-├── main.go              # Основной файл приложения
-├── go.mod              # Модуль Go
-├── README.md           # Этот файл
-└── static/             # Статические файлы (HTML, CSS, JS, изображения)
+├── main.go              # Hauptdatei der Anwendung
+├── go.mod              # Go-Modul
+├── README.md           # Diese Datei
+└── static/             # Statische Dateien (HTML, CSS, JS, Bilder)
     ├── index.html
     ├── menu.html
     ├── css/
     └── js/
 ```
 
-## Возможности
+## Funktionen
 
-- Отображение HTML страниц
-- API для меню
-- API для заказов
+- HTML-Seiten anzeigen
+- API für Menü
+- API für Bestellungen
 
-## Разработка
+## Entwicklung
 
-Скопируйте ваши HTML файлы из Google Docs в папку `static/`.
+Kopieren Sie Ihre HTML-Dateien aus Google Docs in den `static/` Ordner.
