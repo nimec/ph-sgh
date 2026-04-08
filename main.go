@@ -6,9 +6,16 @@ import (
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/glebarez/sqlite" // English comment: Pure Go SQLite driver (no CGO needed)
+	"gorm.io/gorm"
 )
 
 func main() {
+	initDB() // English comment: Setup database before starting the server
+
+	fs := http.FileServer(http.Dir("./static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	// Page handlers
 	http.HandleFunc("/", handleIndex)
 	http.HandleFunc("/menu", handleMenu)
@@ -49,28 +56,23 @@ func handleIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleMenu(w http.ResponseWriter, r *http.Request) {
-	// English comment: Populating data from the provided images
-	data := MenuData{
-		Pizzas: []Product{
-			{ID: 1, Name: "Pizza mit Tomaten und Käse", Description: "Klassisch mit Tomatensauce und Käse", Price: 7.50},
-			{ID: 2, Name: "Pizza mit Paprika", Description: "Frische Paprika, Tomaten, Käse", Price: 8.00},
-			{ID: 4, Name: "Pizza mit Salami", Description: "Würzige Salami, Tomaten, Käse", Price: 8.50},
-			{ID: 9, Name: "Pizza mit Thunfisch", Description: "Thunfisch, Zwiebeln, Tomaten, Käse", Price: 9.00},
-			{ID: 11, Name: "Pizza mit Schinken und Ananas", Description: "Hawaiian Style mit Schinken и Ananas", Price: 9.50},
-		},
-		Pastas: []Product{
-			{ID: 25, Name: "Spaghetti mit Tomatensauce", Description: "Klassische italienische Tomatensauce", Price: 6.50},
-			{ID: 26, Name: "Spaghetti Bolognese", Description: "Mit herzhafter Fleischsauce", Price: 7.00},
-		},
-		Salats: []Product{
-			{ID: 22, Name: "Griechischer Bauernsalat", Description: "Eisbergsalat, Tomaten, Gurken, Paprika, Schafskäse, Oliven", Price: 7.00},
-		},
+	var pizzas, pastas []Product
+
+	// English comment: Fetch items from DB filtered by category
+	db.Where("category = ?", "Pizza").Find(&pizzas)
+	db.Where("category = ?", "Pasta").Find(&pastas)
+
+	data := struct {
+		Pizzas []Product
+		Pastas []Product
+	}{
+		Pizzas: pizzas,
+		Pastas: pastas,
 	}
 
 	tmpl, err := template.ParseFiles("templates/menu.html")
 	if err != nil {
-		log.Printf("Error: %v", err)
-		http.Error(w, "Internal Error", 500)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 	tmpl.Execute(w, data)
@@ -93,12 +95,41 @@ func handleOrder(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, `{"status": "Bestellung angenommen"}`)
 }
 
+var db *gorm.DB
+
+func initDB() {
+	var err error
+	// English comment: Open connection to SQLite database file
+	db, err = gorm.Open(sqlite.Open("pizza.db"), &gorm.Config{})
+	if err != nil {
+		log.Fatal("Failed to connect to database:", err)
+	}
+
+	// English comment: Automatically create the table based on Product struct
+	db.AutoMigrate(&Product{})
+
+	// English comment: Seed data if table is empty
+	var count int64
+	db.Model(&Product{}).Count(&count)
+	if count == 0 {
+		initialProducts := []Product{
+			{Name: "Pizza mit Tomaten und Käse", Description: "Grundlage für alle Pizzen", Price: 7.50, Category: "Pizza"},
+			{Name: "Pizza mit Paprika", Description: "Frische Paprika", Price: 8.00, Category: "Pizza"},
+			{Name: "Spaghetti Bolognese", Description: "Hausgemachte Fleischsauce", Price: 7.00, Category: "Pasta"},
+		}
+		db.Create(&initialProducts)
+		log.Println("Database seeded with initial items.")
+	}
+}
+
 // Product represents a menu item
 type Product struct {
+	gorm.Model
 	ID          int
 	Name        string
 	Description string
 	Price       float64
+	Category    string // English comment: To distinguish between Pizza, Pasta, etc.
 }
 
 // MenuData holds all categories for the template
