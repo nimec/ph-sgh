@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"log"
@@ -188,13 +189,32 @@ func initDB() {
 	var count int64
 	db.Model(&Product{}).Count(&count)
 	if count == 0 {
-		initialProducts := []Product{
-			{Name: "Pizza mit Tomaten und Käse", Description: "Grundlage für alle Pizzen", Price: 7.50, Category: "Pizza"},
-			{Name: "Pizza mit Paprika", Description: "Frische Paprika", Price: 8.00, Category: "Pizza"},
-			{Name: "Spaghetti Bolognese", Description: "Hausgemachte Fleischsauce", Price: 7.00, Category: "Pasta"},
-		}
-		db.Create(&initialProducts)
-		log.Println("Database seeded with initial items.")
+		loadMenuFromJSON("menu.json")
+		log.Println("Database seeded from menu.json.")
+	}
+}
+
+// loadMenuFromJSON reads the menu.json file and inserts all items into the database
+func loadMenuFromJSON(filename string) {
+	data, err := os.ReadFile(filename)
+	if err != nil {
+		log.Printf("Error reading %s: %v", filename, err)
+		return
+	}
+
+	var products []Product
+	err = json.Unmarshal(data, &products)
+	if err != nil {
+		log.Printf("Error parsing JSON: %v", err)
+		return
+	}
+
+	// Insert all products into the database
+	result := db.Create(&products)
+	if result.Error != nil {
+		log.Printf("Error inserting products: %v", result.Error)
+	} else {
+		log.Printf("Successfully loaded %d products from %s", len(products), filename)
 	}
 }
 
