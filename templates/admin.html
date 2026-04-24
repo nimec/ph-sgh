@@ -23,7 +23,7 @@
             <div class="lg:col-span-1">
                 <div class="bg-white p-6 rounded-xl shadow-lg sticky top-6">
                     <h2 class="text-xl font-semibold mb-4 text-red-800 border-b pb-2">Neues Gericht</h2>
-                    <form action="/admin/save" method="POST" class="space-y-4">
+                    <form action="/admin/save" method="POST" enctype="multipart/form-data" class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Name</label>
                             <input type="text" name="name" required placeholder="z.B. Pizza Mista"
@@ -46,6 +46,11 @@
                                 <label class="block text-sm font-medium text-gray-700">Preis (€)</label>
                                 <input type="number" name="price" step="0.01" required placeholder="8.50"
                                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-red-500 focus:border-red-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Photo</label>
+                                <input type="file" name="image" accept="image/*"
+                                    class="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-md p-2">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Kategorie</label>

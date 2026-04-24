@@ -48,12 +48,9 @@
             <a href="/" class="pb-1 font-body transition-colors hover:text-red-700 text-stone-600">Startseite</a>
             <a href="/menu" class="pb-1 font-body transition-colors hover:text-red-700 text-stone-600">Speisekarte</a>
             <a href="/about" class="pb-1 font-body transition-colors hover:text-red-700 text-stone-600">Über uns</a>
-            <a href="/contact" class="pb-1 font-body transition-colors hover:text-red-700 text-stone-600">Kontakt</a>
+
         </div>
-        <button
-            class="bg-gradient-to-br from-red-900 to-red-700 text-white px-6 py-2.5 rounded-xl font-headline font-bold">
-            Jetzt bestellen
-        </button>
+
     </nav>
 
     <!-- Hero Section -->
@@ -93,6 +90,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {{range .Pizzas}}
                 <div class="p-4 border rounded-xl shadow-sm bg-white">
+                    {{if .Image}}
+                    <img src="/static/{{.Image}}" alt="{{.Name}}" class="w-full h-48 object-cover rounded-xl mb-4">
+                    {{end}}
                     <div class="flex justify-between items-start">
                         <div>
                             <h3 class="font-bold text-lg">{{.MenuNumber}}.{{.Name}}</h3>
@@ -105,7 +105,7 @@
             </div>
         </section>
         <section class="space-y-8 mt-12">
-                        <div class="flex items-end justify-between border-b border-outline-variant/30 pb-6">
+            <div class="flex items-end justify-between border-b border-outline-variant/30 pb-6">
                 <div>
                     <h2 class="text-4xl font-headline font-bold">Nudelgerichte</h2>
                     <p class="text-on-surface-variant font-body mt-2">Die zeitlosen Favoriten aus unserem Steinofen.</p>
@@ -114,6 +114,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {{range .Pastas}}
                 <div class="p-4 border rounded-xl shadow-sm bg-white">
+                     {{if .Image}}
+                        <img src="/static/{{.Image}}" alt="{{.Name}}" class="w-full h-48 object-cover rounded-xl mb-4">
+                    {{end}}
                     <h3 class="font-bold text-lg">{{.MenuNumber}}. {{.Name}}</h3>
                     <p class="text-gray-600 text-sm">{{.Description}}</p>
                     <span class="font-bold text-red-700">{{printf "%.2f" .Price}} €</span>

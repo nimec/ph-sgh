@@ -4,9 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"io"
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strconv"
 
 	"github.com/glebarez/sqlite" // English comment: Pure Go SQLite driver (no CGO needed)
@@ -22,10 +24,10 @@ func main() {
 	http.HandleFunc("/", handleIndex)
 	http.HandleFunc("/menu", handleMenu)
 	http.HandleFunc("/about", handleAbout)
-	http.HandleFunc("/contact", handleContact)
-	http.HandleFunc("/admin/delete", handleDelete)
-	http.HandleFunc("/admin/save", handleSave)
-	http.HandleFunc("/admin", handleAdmin)
+
+	http.HandleFunc("/admin/delete", requireAdmin(handleDelete))
+	http.HandleFunc("/admin/save", requireAdmin(handleSave))
+	http.HandleFunc("/admin", requireAdmin(handleAdmin))
 
 	// API handlers
 	http.HandleFunc("/api/order", handleOrder)
@@ -37,6 +39,23 @@ func main() {
 	fmt.Printf("🍕 Pizzeria-Server läuft auf http://localhost%s\n", port)
 	if err := http.ListenAndServe(port, nil); err != nil {
 		log.Fatal(err)
+	}
+}
+
+var (
+	adminUser = os.Getenv("ADMIN_USER")
+	adminPass = os.Getenv("ADMIN_PASS")
+)
+
+func requireAdmin(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		user, pass, ok := r.BasicAuth()
+		if !ok || user != adminUser || pass != adminPass {
+			w.Header().Set("WWW-Authenticate", `Basic realm="Admin area"`)
+			http.Error(w, "Unauthorized", http.StatusUnauthorized)
+			return
+		}
+		next(w, r)
 	}
 }
 
@@ -87,9 +106,7 @@ func handleAbout(w http.ResponseWriter, r *http.Request) {
 	serveHTML(w, "about.html")
 }
 
-func handleContact(w http.ResponseWriter, r *http.Request) {
-	serveHTML(w, "contact.html")
-}
+
 
 func handleOrder(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
@@ -156,6 +173,20 @@ func handleSave(w http.ResponseWriter, r *http.Request) {
 		Description: description,
 		Price:       price,
 		Category:    category,
+	}
+
+	r.ParseMultipartForm(10 << 20)
+
+	file, header, err := r.FormFile("image")
+	if err == nil {
+		defer file.Close()
+		os.MkdirAll("static/images", 0755)
+		filename := filepath.Base(header.Filename)
+		dstPath := filepath.Join("static/images", filename)
+		dst, _ := os.Create(dstPath)
+		defer dst.Close()
+		io.Copy(dst, file)
+		newProduct.Image = "images/" + filename
 	}
 
 	// Persist the new product to the database using GORM
@@ -227,6 +258,7 @@ type Product struct {
 	Description string
 	Price       float64
 	Category    string // English comment: To distinguish between Pizza, Pasta, etc.
+	Image       string
 }
 
 // MenuData holds all categories for the template

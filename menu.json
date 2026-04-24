@@ -64,5 +64,9 @@
   { "menu_number": "40", "name": "Schnitzel Hawaii", "description": "Mit Schinken, Ananas und Käse überbacken, dazu Pommes", "price": 10.00, "category": "Sonstige" },
   { "menu_number": "41", "name": "Pommes frites", "description": "Große Portion", "price": 3.50, "category": "Sonstige" },
   { "menu_number": "49", "name": "Schnitzel mit Sahnesauce überbacken", "description": "Mit Sahnesauce und Käse, dazu Pommes", "price": 10.00, "category": "Sonstige" },
-  { "menu_number": "50", "name": "Hähnchenschnitzel mit Pommes", "description": "Zartes Hähnchenbrustfilet", "price": 8.50, "category": "Sonstige" }
+  { "menu_number": "50", "name": "Hähnchenschnitzel mit Pommes", "description": "Zartes Hähnchenbrustfilet", "price": 8.50, "category": "Sonstige" },
+  { "menu_number": "59", "name": "Currywurst mit Pommes", "description": "Klassische Currywurst", "price": 7.50, "category": "Sonstige" },
+  { "menu_number": "60", "name": "Portion Pommes frites", "description": "Knusprige Pommes", "price": 3.50, "category": "Sonstige" },
+  { "menu_number": "61", "name": "Chicken Nuggets (6 Stk.) mit Pommes", "description": "Inklusive Ketchup oder Mayo", "price": 7.00, "category": "Sonstige" },
+  { "menu_number": "62", "name": "Chicken Nuggets (10 Stk.) mit Pommes", "description": "Inklusive Ketchup oder Mayo", "price": 9.50, "category": "Sonstige" }
 ]
