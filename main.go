@@ -11,15 +11,16 @@ import (
 	"path/filepath"
 	"strconv"
 
-	"github.com/glebarez/sqlite" // English comment: Pure Go SQLite driver (no CGO needed)
+	"github.com/glebarez/sqlite" // Pure Go SQLite driver (no CGO needed)
 	"gorm.io/gorm"
 )
 
 func main() {
-	initDB() // English comment: Setup database before starting the server
+	initDB() // Setup the database before starting the server
 
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
+
 	// Page handlers
 	http.HandleFunc("/", handleIndex)
 	http.HandleFunc("/menu", handleMenu)
@@ -27,16 +28,15 @@ func main() {
 
 	http.HandleFunc("/admin/delete", requireAdmin(handleDelete))
 	http.HandleFunc("/admin/save", requireAdmin(handleSave))
+	http.HandleFunc("/admin/update-image", requireAdmin(handleUpdateImage)) // <-- ADD THIS LINE
 	http.HandleFunc("/admin", requireAdmin(handleAdmin))
-
-	// API handlers
-	http.HandleFunc("/api/order", handleOrder)
 
 	// Serve static assets (CSS, JS, images)
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("static/assets"))))
 
-	port := ":8080"
-	fmt.Printf("🍕 Pizzeria-Server läuft auf http://localhost%s\n", port)
+	// Listen on all network interfaces for cloud deployment compatibility (e.g., Fly.io)
+	port := "0.0.0.0:8080"
+	fmt.Printf("🍕 Pizzeria-Server is running on http://localhost%s\n", port)
 	if err := http.ListenAndServe(port, nil); err != nil {
 		log.Fatal(err)
 	}
@@ -47,6 +47,7 @@ var (
 	adminPass = os.Getenv("ADMIN_PASS")
 )
 
+// requireAdmin is a middleware that enforces Basic Authentication for admin routes
 func requireAdmin(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		user, pass, ok := r.BasicAuth()
@@ -59,12 +60,12 @@ func requireAdmin(next http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
-// serveHTML reads and serves HTML file with proper content type
+// serveHTML reads and serves an HTML file with the proper content type
 func serveHTML(w http.ResponseWriter, filename string) {
 	content, err := os.ReadFile("static/" + filename)
 	if err != nil {
-		http.Error(w, "Seite nicht gefunden", http.StatusNotFound)
-		log.Printf("Fehler beim Laden von %s: %v", filename, err)
+		http.Error(w, "Page not found", http.StatusNotFound)
+		log.Printf("Error loading %s: %v", filename, err)
 		return
 	}
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
@@ -80,18 +81,22 @@ func handleIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleMenu(w http.ResponseWriter, r *http.Request) {
-	var pizzas, pastas []Product
+	var pizzas, pastas, extras []Product
 
-	// English comment: Fetch items from DB filtered by category
+	// Fetch items from the database filtered by category
 	db.Where("category = ?", "Pizza").Find(&pizzas)
 	db.Where("category = ?", "Pasta").Find(&pastas)
+	db.Where("category = ?", "Extra").Find(&extras) // <-- Tell the DB to give us the Extras!
 
+	// Add Extras to the data structure that gets sent to the HTML
 	data := struct {
 		Pizzas []Product
 		Pastas []Product
+		Extras []Product // <-- New field
 	}{
 		Pizzas: pizzas,
 		Pastas: pastas,
+		Extras: extras, // <-- Pass the fetched data
 	}
 
 	tmpl, err := template.ParseFiles("templates/menu.html")
@@ -102,23 +107,60 @@ func handleMenu(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, data)
 }
 
+// handleUpdateImage processes an image upload for an existing product
+func handleUpdateImage(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Redirect(w, r, "/admin", http.StatusSeeOther)
+		return
+	}
+
+	// Limit upload size to 10 MB
+	r.ParseMultipartForm(10 << 20)
+
+	id := r.FormValue("id")
+	if id == "" {
+		http.Redirect(w, r, "/admin", http.StatusBadRequest)
+		return
+	}
+
+	file, header, err := r.FormFile("image")
+	if err != nil {
+		log.Printf("Error retrieving file: %v", err)
+		http.Redirect(w, r, "/admin", http.StatusSeeOther)
+		return
+	}
+	defer file.Close()
+
+	// Save the file
+	os.MkdirAll("static/images", 0755)
+	filename := filepath.Base(header.Filename)
+	dstPath := filepath.Join("static/images", filename)
+
+	dst, err := os.Create(dstPath)
+	if err != nil {
+		log.Printf("Error saving file: %v", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+	defer dst.Close()
+	io.Copy(dst, file)
+
+	// Find the product in the DB and update its Image column
+	var product Product
+	if err := db.First(&product, id).Error; err == nil {
+		db.Model(&product).Update("image", "images/"+filename)
+	}
+
+	http.Redirect(w, r, "/admin", http.StatusSeeOther)
+}
 func handleAbout(w http.ResponseWriter, r *http.Request) {
 	serveHTML(w, "about.html")
 }
 
-
-
-func handleOrder(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		http.Error(w, "Methode nicht erlaubt", http.StatusMethodNotAllowed)
-		return
-	}
-	w.Header().Set("Content-Type", "application/json")
-	fmt.Fprint(w, `{"status": "Bestellung angenommen"}`)
-}
 func handleAdmin(w http.ResponseWriter, r *http.Request) {
 	var products []Product
-	// English comment: Fetch all products from DB to display in the admin table
+
+	// Fetch all products from the database to display in the admin table
 	db.Find(&products)
 
 	tmpl, err := template.ParseFiles("templates/admin.html")
@@ -127,19 +169,20 @@ func handleAdmin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// English comment: Pass the list of products to the template
+	// Pass the list of products to the template
 	tmpl.Execute(w, products)
 }
+
 func handleDelete(w http.ResponseWriter, r *http.Request) {
-	// English comment: Get ID from URL query, e.g., /admin/delete?id=10
+	// Get the ID from the URL query (e.g., /admin/delete?id=10)
 	id := r.URL.Query().Get("id")
 
 	if id != "" {
-		// English comment: GORM perform a soft delete (or hard delete if no DeletedAt field)
+		// Perform a soft delete (or hard delete if there is no DeletedAt field)
 		db.Delete(&Product{}, id)
 	}
 
-	// English comment: Redirect back to admin panel
+	// Redirect back to the admin panel
 	http.Redirect(w, r, "/admin", http.StatusSeeOther)
 }
 
@@ -152,14 +195,12 @@ func handleSave(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Parse form values from the request body
-	// Equivalent to @RequestParam or request.getParameter() in Java
 	name := r.FormValue("name")
 	description := r.FormValue("description")
 	category := r.FormValue("category")
 	menu_number := r.FormValue("menu_number")
 
 	// Convert the price string to a float64
-	// In Go, we must explicitly handle the conversion and potential error
 	price, err := strconv.ParseFloat(r.FormValue("price"), 64)
 	if err != nil {
 		log.Printf("Invalid price input: %v", err)
@@ -175,8 +216,10 @@ func handleSave(w http.ResponseWriter, r *http.Request) {
 		Category:    category,
 	}
 
+	// Parse multipart form to handle file uploads (limit to 10 MB)
 	r.ParseMultipartForm(10 << 20)
 
+	// Handle the image file upload
 	file, header, err := r.FormFile("image")
 	if err == nil {
 		defer file.Close()
@@ -189,8 +232,7 @@ func handleSave(w http.ResponseWriter, r *http.Request) {
 		newProduct.Image = "images/" + filename
 	}
 
-	// Persist the new product to the database using GORM
-	// Similar to repository.save(entity) in Spring Data JPA
+	// Persist the new product to the database
 	result := db.Create(&newProduct)
 	if result.Error != nil {
 		log.Printf("Database error: %v", result.Error)
@@ -198,8 +240,7 @@ func handleSave(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Redirect back to the admin dashboard after successful save
-	// This follows the Post/Redirect/Get pattern
+	// Redirect back to the admin dashboard after a successful save
 	http.Redirect(w, r, "/admin", http.StatusSeeOther)
 }
 
@@ -207,21 +248,28 @@ var db *gorm.DB
 
 func initDB() {
 	var err error
-	// English comment: Open connection to SQLite database file
-	db, err = gorm.Open(sqlite.Open("pizza.db"), &gorm.Config{})
+
+	// Create the /data directory (required for Fly.io persistent volumes)
+	os.MkdirAll("/data", 0755)
+
+	// Open connection to the SQLite database file inside the persistent volume
+	db, err = gorm.Open(sqlite.Open("/data/pizza.db"), &gorm.Config{})
 	if err != nil {
 		log.Fatal("Failed to connect to database:", err)
 	}
 
-	// English comment: Automatically create the table based on Product struct
+	// Automatically create the table based on the Product struct
+	db.Migrator().DropTable(&Product{})
 	db.AutoMigrate(&Product{})
 
-	// English comment: Seed data if table is empty
+	// Seed data if the table is empty
 	var count int64
 	db.Model(&Product{}).Count(&count)
 	if count == 0 {
 		loadMenuFromJSON("menu.json")
 		log.Println("Database seeded from menu.json.")
+		loadMenuFromJSON("extras.json")
+		log.Println("Database seeded from extras.json.")
 	}
 }
 
@@ -254,10 +302,10 @@ type Product struct {
 	gorm.Model
 	ID          int
 	Name        string
-	MenuNumber  string // English comment: Store numbers like "01" or "02a"
+	MenuNumber  string // Store numbers like "01" or "02a"
 	Description string
 	Price       float64
-	Category    string // English comment: To distinguish between Pizza, Pasta, etc.
+	Category    string // Used to distinguish between Pizza, Pasta, etc.
 	Image       string
 }
 

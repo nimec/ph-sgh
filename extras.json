@@ -1,0 +1,20 @@
+[
+  { "name": "Zwiebeln", "price": 1.00, "category": "Extra" },
+  { "name": "Peperoni", "price": 1.00, "category": "Extra" },
+  { "name": "Paprika", "price": 1.00, "category": "Extra" },
+  { "name": "Knoblauch", "price": 1.00, "category": "Extra" },
+  { "name": "Mais", "price": 1.00, "category": "Extra" },
+  { "name": "Broccoli", "price": 1.50, "category": "Extra" },
+  { "name": "Käse", "price": 1.50, "category": "Extra" },
+  { "name": "Sardellen", "price": 1.50, "category": "Extra" },
+  { "name": "Artischocken", "price": 1.50, "category": "Extra" },
+  { "name": "Salami", "price": 2.00, "category": "Extra" },
+  { "name": "Schinken", "price": 2.00, "category": "Extra" },
+  { "name": "Ananas", "price": 2.00, "category": "Extra" },
+  { "name": "Champignons", "price": 2.00, "category": "Extra" },
+  { "name": "Peperoniwurst", "price": 2.50, "category": "Extra" },
+  { "name": "Thunfisch", "price": 2.50, "category": "Extra" },
+  { "name": "Rinderknoblauchwurst", "price": 2.50, "category": "Extra" },
+  { "name": "Lachs", "price": 3.00, "category": "Extra" },
+  { "name": "Krabben", "price": 3.00, "category": "Extra" }
+]
