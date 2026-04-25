@@ -81,22 +81,31 @@ func handleIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleMenu(w http.ResponseWriter, r *http.Request) {
-	var pizzas, pastas, extras []Product
+	var pizzas, pastas, extras, drinks, salats, sonstige []Product // Add sonstige variable
 
 	// Fetch items from the database filtered by category
 	db.Where("category = ?", "Pizza").Find(&pizzas)
 	db.Where("category = ?", "Pasta").Find(&pastas)
-	db.Where("category = ?", "Extra").Find(&extras) // <-- Tell the DB to give us the Extras!
+	db.Where("category = ?", "Extra").Find(&extras)
+	db.Where("category = ?", "Getränke").Find(&drinks)   // Fetch drinks
+	db.Where("category = ?", "Salat").Find(&salats)      // Fetch salats
+	db.Where("category = ?", "Sonstige").Find(&sonstige) // Fetch sonstige
 
 	// Add Extras to the data structure that gets sent to the HTML
 	data := struct {
-		Pizzas []Product
-		Pastas []Product
-		Extras []Product // <-- New field
+		Pizzas   []Product
+		Pastas   []Product
+		Extras   []Product
+		Drinks   []Product
+		Salats   []Product
+		Sonstige []Product // Add sonstige field
 	}{
-		Pizzas: pizzas,
-		Pastas: pastas,
-		Extras: extras, // <-- Pass the fetched data
+		Pizzas:   pizzas,
+		Pastas:   pastas,
+		Extras:   extras,
+		Drinks:   drinks,
+		Salats:   salats,
+		Sonstige: sonstige, // Pass the fetched sonstige
 	}
 
 	tmpl, err := template.ParseFiles("templates/menu.html")
@@ -288,13 +297,15 @@ func loadMenuFromJSON(filename string) {
 		return
 	}
 
-	// Insert all products into the database
-	result := db.Create(&products)
-	if result.Error != nil {
-		log.Printf("Error inserting products: %v", result.Error)
-	} else {
-		log.Printf("Successfully loaded %d products from %s", len(products), filename)
+	// Save each product to the database (will insert or update)
+	for _, product := range products {
+		result := db.Save(&product)
+		if result.Error != nil {
+			log.Printf("Error saving product %s from %s: %v", product.Name, filename, result.Error)
+			// Decide if you want to continue or return on error
+		}
 	}
+	log.Printf("Successfully loaded %d products from %s", len(products), filename)
 }
 
 // Product represents a menu item
@@ -302,7 +313,7 @@ type Product struct {
 	gorm.Model
 	ID          int
 	Name        string
-	MenuNumber  string // Store numbers like "01" or "02a"
+	MenuNumber  string `json:"menu_number"` // Store numbers like "01" or "02a"
 	Description string
 	Price       float64
 	Category    string // Used to distinguish between Pizza, Pasta, etc.

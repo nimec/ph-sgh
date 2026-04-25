@@ -78,10 +78,11 @@
 <main class="max-w-7xl mx-auto px-6 py-16">
 
     <section class="space-y-12 pb-12">
-        <div class="flex items-end justify-between border-b border-outline-variant/30 pb-6">
-            <div>
+        <div class="relative min-h-[200px] flex items-center justify-center rounded-lg overflow-hidden" style="background-image: url('/static/images/classic.jpg'); background-size: cover; background-position: center;">
+            <div class="absolute inset-0 bg-black/60"></div>
+            <div class="relative z-10 text-center text-white p-6">
                 <h2 class="text-4xl font-headline font-bold">Klassische Pizzen</h2>
-                <p class="text-on-surface-variant font-body mt-2">Die zeitlosen Favoriten aus unserem Steinofen.</p>
+                <p class="font-body mt-2">Die zeitlosen Favoriten aus unserem Steinofen.</p>
             </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -92,7 +93,7 @@
                 {{end}}
                 <div class="flex justify-between items-start">
                     <div>
-                        <h3 class="font-bold text-lg">{{.MenuNumber}}{{.Name}}</h3>
+                        <h3 class="font-bold text-lg">{{if ne .MenuNumber "-"}}{{.MenuNumber}}. {{end}}{{.Name}}</h3>
                         <p class="text-gray-600 text-sm">{{.Description}}</p>
                     </div>
                     <span class="font-bold text-red-700">{{printf "%.2f" .Price}} €</span>
@@ -103,10 +104,11 @@
     </section>
 
     <section class="space-y-8 mt-12 pb-12">
-        <div class="flex items-end justify-between border-b border-outline-variant/30 pb-6">
-            <div>
+        <div class="relative min-h-[200px] flex items-center justify-center rounded-lg overflow-hidden" style="background-image: url('/static/images/pasta.jpg'); background-size: cover; background-position: center;">
+            <div class="absolute inset-0 bg-black/60"></div>
+            <div class="relative z-10 text-center text-white p-6">
                 <h2 class="text-4xl font-headline font-bold">Nudelgerichte</h2>
-                <p class="text-on-surface-variant font-body mt-2">Authentische Pasta nach original italienischen Rezepten.</p>
+                <p class="font-body mt-2">Authentische Pasta nach original italienischen Rezepten.</p>
             </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -117,7 +119,7 @@
                 {{end}}
                 <div class="flex justify-between items-start">
                     <div>
-                        <h3 class="font-bold text-lg">{{.MenuNumber}} {{.Name}}</h3>
+                        <h3 class="font-bold text-lg">{{if ne .MenuNumber "-"}}{{.MenuNumber}}. {{end}}{{.Name}}</h3>
                         <p class="text-gray-600 text-sm">{{.Description}}</p>
                     </div>
                     <span class="font-bold text-red-700">{{printf "%.2f" .Price}} €</span>
@@ -128,10 +130,11 @@
     </section>
 
     <section class="space-y-8 mt-12 pb-12">
-        <div class="flex items-end justify-between border-b border-outline-variant/30 pb-6">
-            <div>
+        <div class="relative min-h-[200px] flex items-center justify-center rounded-lg overflow-hidden" style="background-image: url('/static/images/extra.jpg'); background-size: cover; background-position: center;">
+            <div class="absolute inset-0 bg-black/60"></div>
+            <div class="relative z-10 text-center text-white p-6">
                 <h2 class="text-4xl font-headline font-bold">Extra Pizza-Belag</h2>
-                <p class="text-on-surface-variant font-body mt-2">Passen Sie Ihre Pizza mit unseren frischen Zutaten nach Wunsch an.</p>
+                <p class="font-body mt-2">Passen Sie Ihre Pizza mit unseren frischen Zutaten nach Wunsch an.</p>
             </div>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -144,52 +147,84 @@
         </div>
     </section>
 
+    <section class="space-y-8 mt-12 pb-12">
+        <div class="relative min-h-[200px] flex items-center justify-center rounded-lg overflow-hidden" style="background-image: url('/static/images/salad.jpg'); background-size: cover; background-position: center;">
+            <div class="absolute inset-0 bg-black/60"></div>
+            <div class="relative z-10 text-center text-white p-6">
+                <h2 class="text-4xl font-headline font-bold">Salate</h2>
+                <p class="font-body mt-2">Frische Salate, leicht und lecker.</p>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {{range .Salats}}
+            <div class="p-4 border rounded-xl shadow-sm bg-white">
+                {{if .Image}}
+                <img src="/static/{{.Image}}" alt="{{.Name}}" class="w-full h-48 object-cover rounded-xl mb-4">
+                {{end}}
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="font-bold text-lg">{{if ne .MenuNumber "-"}}{{.MenuNumber}}. {{end}}{{.Name}}</h3>
+                        <p class="text-gray-600 text-sm">{{.Description}}</p>
+                    </div>
+                    <span class="font-bold text-red-700">{{printf "%.2f" .Price}} €</span>
+                </div>
+            </div>
+            {{end}}
+        </div>
+    </section>
+
+    <section class="space-y-8 mt-12 pb-12">
+        <div class="relative min-h-[200px] flex items-center justify-center rounded-lg overflow-hidden" style="background-image: url('/static/images/sonstige.jpg'); background-size: cover; background-position: center;">
+            <div class="absolute inset-0 bg-black/60"></div>
+            <div class="relative z-10 text-center text-white p-6">
+                <h2 class="text-4xl font-headline font-bold">Sonstige</h2>
+                <p class="font-body mt-2">Vielfältige Gerichte für jeden Geschmack.</p>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {{range .Sonstige}}
+            <div class="p-4 border rounded-xl shadow-sm bg-white">
+                {{if .Image}}
+                <img src="/static/{{.Image}}" alt="{{.Name}}" class="w-full h-48 object-cover rounded-xl mb-4">
+                {{end}}
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="font-bold text-lg">{{if ne .MenuNumber "-"}}{{.MenuNumber}}. {{end}}{{.Name}}</h3>
+                        <p class="text-gray-600 text-sm">{{.Description}}</p>
+                    </div>
+                    <span class="font-bold text-red-700">{{printf "%.2f" .Price}} €</span>
+                </div>
+            </div>
+            {{end}}
+        </div>
+    </section>
+
     <section class="space-y-12 pb-16 border-t border-outline-variant/30 pt-16">
-        <div class="flex items-end justify-between">
-            <div>
+        <div class="relative min-h-[200px] flex items-center justify-center rounded-lg overflow-hidden" style="background-image: url('/static/images/drinks.jpg'); background-size: cover; background-position: center;">
+            <div class="absolute inset-0 bg-black/60"></div>
+            <div class="relative z-10 text-center text-white p-6">
                 <h2 class="text-4xl font-headline font-bold">Getränke</h2>
-                <p class="text-on-surface-variant font-body mt-2">Die perfekte Begleitung zu Ihrer Pizza.</p>
+                <p class="font-body mt-2">Die perfekte Begleitung zu Ihrer Pizza.</p>
             </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-24 gap-y-8">
+            {{range .Drinks}}
             <div class="space-y-6">
-                <h4
-                        class="font-label text-xs uppercase tracking-widest text-on-surface-variant border-b border-outline-variant/20 pb-2">
-                    Alkoholfreie Klassiker</h4>
+                {{if .Category}}
+                <h4 class="font-label text-xs uppercase tracking-widest text-on-surface-variant border-b border-outline-variant/20 pb-2">
+                    {{.Category}}</h4>
+                {{end}}
                 <div class="flex justify-between items-center">
                     <div class="font-body">
-                        <p class="font-semibold">Wasser</p>
-                        <p class="text-sm text-on-surface-variant">0,5 L</p>
+                        <p class="font-semibold">{{if ne .MenuNumber "-"}}{{.MenuNumber}}. {{end}}{{.Name}}</p>
+                        {{if .Description}}
+                        <p class="text-sm text-on-surface-variant">{{.Description}}</p>
+                        {{end}}
                     </div>
-                    <span class="font-headline font-bold">€ 2,50</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <div class="font-body">
-                        <p class="font-semibold">Mineralwasser</p>
-                        <p class="text-sm text-on-surface-variant">0,5 L</p>
-                    </div>
-                    <span class="font-headline font-bold">€ 3,00</span>
+                    <span class="font-headline font-bold">{{printf "%.2f" .Price}} €</span>
                 </div>
             </div>
-            <div class="space-y-6">
-                <h4
-                        class="font-label text-xs uppercase tracking-widest text-on-surface-variant border-b border-outline-variant/20 pb-2">
-                    Weine & Biere</h4>
-                <div class="flex justify-between items-center">
-                    <div class="font-body">
-                        <p class="font-semibold">Rotwein</p>
-                        <p class="text-sm text-on-surface-variant">Glas 0,2 L</p>
-                    </div>
-                    <span class="font-headline font-bold">€ 5,50</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <div class="font-body">
-                        <p class="font-semibold">Bier vom Fass</p>
-                        <p class="text-sm text-on-surface-variant">0,5 L</p>
-                    </div>
-                    <span class="font-headline font-bold">€ 4,00</span>
-                </div>
-            </div>
+            {{end}}
         </div>
     </section>
 </main>
